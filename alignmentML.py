@@ -3,7 +3,7 @@
 #date of last revision: 7/12/2023
 #This program will train a ML model to identify images based on three classes of optical artifact: pinhole, edge, and neither. 
 #This model will be used to align a pinhole into the path of a laser beam
-#inputs: training2.tar.gz (training dataset)
+#inputs: training.tar.gz (training dataset)
 #dependencies: matplotlib, numpy, tensorflow, PIL
 #outputs: pinholeFinder.h5 (trained model)
 
@@ -25,7 +25,7 @@ from tensorflow.keras.models import Sequential #sequential is the type of machin
 
 import pathlib #pathlib will be used to import and initialize a path to the training dataset
 
-dataset_url = "https://people.tamu.edu/~jackjackj/training2.tgz" #this URL is a download link to a .tar.gz file that contains the complete training dataset
+dataset_url = "https://people.tamu.edu/~jackjackj/training.tgz" #this URL is a download link to a .tar.gz file that contains the complete training dataset
 data_dir = tf.keras.utils.get_file('training.tar', origin=dataset_url, extract=True) #this will extract and locally download the URL
 data_dir = pathlib.Path(data_dir).with_suffix('') #this creates a path to the extracted folder so that the program knows where to reference
 
@@ -114,7 +114,7 @@ model.summary() #tell us about the model, confirm it compiled as expected
 
 """Train the model:"""
 
-epochs=2 #set it to two (very small), anything above around 5 will result in overtraining due to simplicity of training dataset
+epochs=10 #feel free to play with this number to avoid over/undertraining
 history = model.fit( #getting a record of training performance, training: model is told correct answer after submitting guess, validation: model gets correct answers only after all questions are answered. Create records of scores in both sets
   train_ds,
   validation_data=val_ds,
